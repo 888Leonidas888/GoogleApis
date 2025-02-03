@@ -6,7 +6,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Net.Http;
 
-namespace GoogleApis
+namespace GoogleApis.Sheet.Helper
 {
     public static class Helper
     {

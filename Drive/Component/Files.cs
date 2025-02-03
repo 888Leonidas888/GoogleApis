@@ -1,220 +1,17 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Net.Http;
-using System.IO;
+﻿using GoogleApis.Drive.Interfaces;
 using Newtonsoft.Json.Linq;
-using System.Diagnostics;
 using Newtonsoft.Json;
+using System;
+using System.Diagnostics;
+using System.IO;
 using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text;
 
-namespace GoogleApis
-{    
-    [ComVisible(true)]
-    [Guid("09909001-1411-4a59-97e6-b6c937c22b05")]
-    public interface IGoogleDrive
-    {
-        int Operation();
-        void ConnectionService(object oFlowOauth);
-        Files Files();
-    }
 
-    [ComVisible(true)]
-    [Guid("13138978-4990-4b09-8e53-a226fee08e97")] // Un GUID único para la interfaz
-    public interface IFiles
-    {
-        /// <summary>
-        /// Realiza una operación genérica.
-        /// </summary>
-        /// <returns>Un entero que representa el resultado de la operación.</returns>
-        int Operation();
-
-        /// <summary>
-        /// Conecta el servicio utilizando el flujo OAuth.
-        /// </summary>
-        /// <param name="oFlowOauth">El objeto de flujo OAuth.</param>
-        void ConnectionService(object oFlowOauth);
-
-        /// <summary>
-        /// Copia un archivo en Google Drive.
-        /// </summary>
-        /// <param name="fileID">El ID del archivo a copiar.</param>
-        /// <param name="fileObject">El objeto del archivo.</param>
-        /// <param name="queryParameters">Parámetros de consulta opcionales.</param>
-        /// <returns>El ID del nuevo archivo copiado.</returns>
-        string Copy(string fileID, string fileObject, Scripting.Dictionary queryParameters = null);
-
-        /// <summary>
-        /// Elimina un archivo en Google Drive.
-        /// </summary>
-        /// <param name="fileID">El ID del archivo a eliminar.</param>
-        /// <returns>Una cadena que representa el resultado de la operación.</returns>
-        string Delete(string fileID);
-
-        /// <summary>
-        /// Vacía la papelera de Google Drive.
-        /// </summary>
-        /// <param name="queryParameters">Parámetros de consulta opcionales.</param>
-        /// <returns>Una cadena que representa el resultado de la operación.</returns>
-        string EmptyTrash(Scripting.Dictionary queryParameters = null);
-
-        /// <summary>
-        /// Exporta un archivo de Google Drive.
-        /// </summary>
-        /// <param name="fileID">El ID del archivo a exportar.</param>
-        /// <param name="queryParameters">Parámetros de consulta.</param>
-        /// <param name="pathFile">La ruta del archivo de destino.</param>
-        /// <returns>Un valor booleano que indica si la exportación fue exitosa.</returns>
-        bool Export(string fileID, Scripting.Dictionary queryParameters, string pathFile);
-
-        /// <summary>
-        /// Genera IDs para nuevos archivos en Google Drive.
-        /// </summary>
-        /// <param name="queryParameters">Parámetros de consulta opcionales.</param>
-        /// <returns>Una cadena que representa los IDs generados.</returns>
-        string GenerateIds(Scripting.Dictionary queryParameters = null);
-
-        /// <summary>
-        /// Obtiene los metadatos de un archivo en Google Drive.
-        /// </summary>
-        /// <param name="fileID">El ID del archivo.</param>
-        /// <param name="queryParameters">Parámetros de consulta opcionales.</param>
-        /// <returns>Una cadena que representa los metadatos del archivo.</returns>
-        string GetMetadata(string fileID, Scripting.Dictionary queryParameters = null);
-
-        /// <summary>
-        /// Lista los archivos en Google Drive.
-        /// </summary>
-        /// <param name="queryParameters">Parámetros de consulta opcionales.</param>
-        /// <returns>Una cadena que representa la lista de archivos.</returns>
-        string List(Scripting.Dictionary queryParameters = null);
-
-        /// <summary>
-        /// Lista las etiquetas de un archivo en Google Drive.
-        /// </summary>
-        /// <param name="fileID">El ID del archivo.</param>
-        /// <param name="queryParameters">Parámetros de consulta opcionales.</param>
-        /// <returns>Una cadena que representa la lista de etiquetas.</returns>
-        string ListLabels(string fileID, Scripting.Dictionary queryParameters = null);
-
-        /// <summary>
-        /// Actualiza un archivo en Google Drive.
-        /// </summary>
-        /// <param name="fileID">El ID del archivo.</param>
-        /// <param name="fileObject">El objeto del archivo opcional.</param>
-        /// <param name="queryParameters">Parámetros de consulta opcionales.</param>
-        /// <returns>Una cadena que representa el resultado de la operación.</returns>
-        string Update(string fileID, string fileObject = null, Scripting.Dictionary queryParameters = null);
-
-        /// <summary>
-        /// Descarga el contenido de un archivo en Google Drive.
-        /// </summary>
-        /// <param name="fileID">El ID del archivo.</param>
-        /// <returns>Un valor booleano que indica si la descarga fue exitosa.</returns>
-        bool DownLoadContentLink(string fileID);
-
-        /// <summary>
-        /// Descarga un archivo en Google Drive.
-        /// </summary>
-        /// <param name="fileID">El ID del archivo.</param>
-        /// <param name="directory">El directorio de destino.</param>
-        /// <returns>Un valor booleano que indica si la descarga fue exitosa.</returns>
-        bool DownLoad(string fileID, string directory);
-
-        /// <summary>
-        /// Sube un archivo multimedia a Google Drive.
-        /// </summary>
-        /// <param name="pathFile">La ruta del archivo.</param>
-        /// <param name="mimeType">El tipo MIME del archivo.</param>
-        /// <returns>El ID del archivo subido.</returns>
-        string UploadMedia(string pathFile = null, string mimeType = "application/octet-stream");
-
-        /// <summary>
-        /// Sube un archivo multipart a Google Drive.
-        /// </summary>
-        /// <param name="pathFile">La ruta del archivo.</param>
-        /// <param name="fileObject">El objeto del archivo.</param>
-        /// <returns>El ID del archivo subido.</returns>
-        string UploadMultipart(string pathFile, string fileObject);
-    }
-
-    [ComVisible(true)]
-    [Guid("9f8b1b7e-0c42-40e3-89a7-4bda8a8e2e30")]
-    [ClassInterface(ClassInterfaceType.None)]
-    public class GoogleDrive: IGoogleDrive
-    {
-        private const string SERVICE_END_POINT = "https://www.googleapis.com/drive/v3/files";
-        private const string SERVICE_END_POINT_UPLOAD = "https://www.googleapis.com/upload/drive/v3/files";
-
-        private string _apiKey;
-        private string _accessToken;
-        private int _status;        
-
-        public int Operation()
-        {
-            return _status;
-        }
-        public void ConnectionService(object oFlowOauth)
-        {
-            dynamic flow = oFlowOauth;
-
-            _apiKey = flow.GetApiKey();
-            _accessToken = flow.GetTokenAccess();
-        }
-        private string CreateQueryParameters(string pathParameters = null, Scripting.Dictionary queryParameters = null, bool endPointUpload = false)
-        {
-            string endPoint = endPointUpload ? SERVICE_END_POINT_UPLOAD : SERVICE_END_POINT;
-            string queryString = "?";
-
-            try
-            {
-                if (queryParameters != null)
-                {
-                    if (queryParameters is Scripting.Dictionary dict)
-                    {
-                        foreach (var k in dict)
-                        {
-                            var v = Helper.URLEncode(dict.get_Item(k));
-                            queryString += $"{k}={v}&";
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception($"QueryParameters not is dicctionary.");
-                    }
-                }
-
-                endPoint += pathParameters;
-                queryString += $"key={_apiKey}";
-
-                return $"{endPoint}{queryString}";
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error create query parameters: {ex.Message}");
-            }
-        }
-        private HttpResponseMessage Request(string method, string url, object body = null, Scripting.Dictionary headers = null)
-        {
-            if (headers == null)
-            {
-                headers = new Scripting.Dictionary();
-            }
-
-            headers.set_Item("Authorization", $"Bearer {_accessToken}");
-            headers.set_Item("Accept", "application/json");
-
-            var response = Helper.Request(method, url, body, headers);
-            _status = (int)response.StatusCode;
-            return response;
-        }
-        public Files Files()
-        {
-            return new Files(this._apiKey, this._accessToken);
-        }
-
-    }
-
+namespace GoogleApis.Drive.Component
+{
     //// Implementar la interfaz IGoogleDrive en la clase GoogleDrive
     [ComVisible(true)]
     [Guid("f3fbc540-6c6d-4f3f-8f25-83337d0a73d6")] // Un GUID único para la clase
@@ -257,7 +54,7 @@ namespace GoogleApis
                     {
                         foreach (var k in dict)
                         {
-                            var v = Helper.URLEncode(dict.get_Item(k));
+                            var v = Helper.Helper.URLEncode(dict.get_Item(k));
                             queryString += $"{k}={v}&";
                         }
                     }
@@ -287,7 +84,7 @@ namespace GoogleApis
             headers.set_Item("Authorization", $"Bearer {_accessToken}");
             headers.set_Item("Accept", "application/json");
 
-            var response = Helper.Request(method, url, body, headers);
+            var response = Helper.Helper.Request(method, url, body, headers);
             _status = (int)response.StatusCode;
             return response;
         }
@@ -534,7 +331,7 @@ namespace GoogleApis
             var buffer = Request("GET", url).Content.ReadAsByteArrayAsync();
 
             buffer.Wait();
-            
+
             if (buffer.Result != null)
             {
                 System.IO.File.WriteAllBytes(fullPath, buffer.Result);
@@ -555,7 +352,7 @@ namespace GoogleApis
                 if (System.IO.File.Exists(pathFile))
                 {
                     endPointUpload = true;
-                    buffer = Helper.SourceToBinary(pathFile);
+                    buffer = Helper.Helper.SourceToBinary(pathFile);
                     var fileInfo = new FileInfo(pathFile);
 
                     headers.Add("Content-Type", mimeType);
@@ -595,7 +392,7 @@ namespace GoogleApis
         {
             try
             {
-                string boundary = Helper.GenerateString(15);
+                string boundary = Helper.Helper.GenerateString(15);
                 var queryParameters = new Scripting.Dictionary {
                     {"uploadType", "multipart" }
                 };
@@ -605,7 +402,7 @@ namespace GoogleApis
                 using (var client = new HttpClient())
                 {
                     var requestMessage = new HttpRequestMessage(HttpMethod.Post, url);
-                    string body = Helper.CreatePartRelated(pathFile, boundary, fileObject);
+                    string body = Helper.Helper.CreatePartRelated(pathFile, boundary, fileObject);
 
                     requestMessage.Headers.TryAddWithoutValidation("Authorization", $"Bearer {_accessToken}");
                     requestMessage.Headers.TryAddWithoutValidation("Accept", "application/json");

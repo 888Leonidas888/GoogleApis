@@ -46,9 +46,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GoogleDrive.cs" />
-    <Compile Include="GoogleSheets.cs" />
-    <Compile Include="Helper.cs" />
+    <Compile Include="Drive\Component\Files.cs" />
+    <Compile Include="Drive\GoogleDrive.cs" />
+    <Compile Include="Drive\Interfaces\IFiles.cs" />
+    <Compile Include="Drive\Interfaces\IGoogleDrive.cs" />
+    <Compile Include="Sheet\Component\Sheets.cs" />
+    <Compile Include="Sheet\Component\SpreadSheets.cs" />
+    <Compile Include="Sheet\Component\Values.cs" />
+    <Compile Include="Sheet\GoogleSheets.cs" />
+    <Compile Include="Sheet\Common\GoogleSheetsBase.cs" />
+    <Compile Include="Drive\Helper\Helper.cs" />
+    <Compile Include="Sheet\Helper\Helper.cs" />
+    <Compile Include="Sheet\Interfaces\IGoogleSheets.cs" />
+    <Compile Include="Sheet\Interfaces\ISheets.cs" />
+    <Compile Include="Sheet\Interfaces\ISpreadSheets.cs" />
+    <Compile Include="Sheet\Interfaces\IValues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +76,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Drive\Common\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
