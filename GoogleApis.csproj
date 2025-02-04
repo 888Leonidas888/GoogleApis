@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drive\Common\GoogleDriveBase.cs" />
     <Compile Include="Drive\Component\Files.cs" />
     <Compile Include="Drive\GoogleDrive.cs" />
     <Compile Include="Drive\Interfaces\IFiles.cs" />
@@ -77,8 +78,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Drive\Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -15,12 +15,6 @@ namespace GoogleApis.Drive.Interfaces
         int Operation();
 
         /// <summary>
-        /// Conecta el servicio utilizando el flujo OAuth.
-        /// </summary>
-        /// <param name="oFlowOauth">El objeto de flujo OAuth.</param>
-        void ConnectionService(object oFlowOauth);
-
-        /// <summary>
         /// Copia un archivo en Google Drive.
         /// </summary>
         /// <param name="fileID">El ID del archivo a copiar.</param>

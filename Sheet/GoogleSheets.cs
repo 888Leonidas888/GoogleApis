@@ -15,11 +15,7 @@ namespace GoogleApis.Sheet
         public string VersionApiGoogleSheets()
         {
             return _VERSION_API_GOOGLE_SHEETS;
-        }
-        public int Operation()
-        {
-            return _status;
-        }
+        }        
         public void ConnectionService(object oFlowOauth)
         {
             dynamic flow = oFlowOauth;

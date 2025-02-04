@@ -8,7 +8,7 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
-
+using GoogleApis.Drive.Common;  
 
 namespace GoogleApis.Drive.Component
 {
@@ -16,15 +16,8 @@ namespace GoogleApis.Drive.Component
     [ComVisible(true)]
     [Guid("f3fbc540-6c6d-4f3f-8f25-83337d0a73d6")] // Un GUID único para la clase
     [ClassInterface(ClassInterfaceType.None)] // Evita que se genere automáticamente una interfaz COM
-    public class Files : IFiles
+    public class Files :GoogleDriveBase, IFiles
     {
-        private const string SERVICE_END_POINT = "https://www.googleapis.com/drive/v3/files";
-        private const string SERVICE_END_POINT_UPLOAD = "https://www.googleapis.com/upload/drive/v3/files";
-
-        private string _apiKey;
-        private string _accessToken;
-        private int _status;
-
         public Files(string apiKey, string accessToken)
         {
             _apiKey = apiKey;
@@ -33,61 +26,7 @@ namespace GoogleApis.Drive.Component
         public int Operation()
         {
             return _status;
-        }
-        public void ConnectionService(object oFlowOauth)
-        {
-            dynamic flow = oFlowOauth;
-
-            _apiKey = flow.GetApiKey();
-            _accessToken = flow.GetTokenAccess();
-        }
-        private string CreateQueryParameters(string pathParameters = null, Scripting.Dictionary queryParameters = null, bool endPointUpload = false)
-        {
-            string endPoint = endPointUpload ? SERVICE_END_POINT_UPLOAD : SERVICE_END_POINT;
-            string queryString = "?";
-
-            try
-            {
-                if (queryParameters != null)
-                {
-                    if (queryParameters is Scripting.Dictionary dict)
-                    {
-                        foreach (var k in dict)
-                        {
-                            var v = Helper.Helper.URLEncode(dict.get_Item(k));
-                            queryString += $"{k}={v}&";
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception($"QueryParameters not is dicctionary.");
-                    }
-                }
-
-                endPoint += pathParameters;
-                queryString += $"key={_apiKey}";
-
-                return $"{endPoint}{queryString}";
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error create query parameters: {ex.Message}");
-            }
-        }
-        private HttpResponseMessage Request(string method, string url, object body = null, Scripting.Dictionary headers = null)
-        {
-            if (headers == null)
-            {
-                headers = new Scripting.Dictionary();
-            }
-
-            headers.set_Item("Authorization", $"Bearer {_accessToken}");
-            headers.set_Item("Accept", "application/json");
-
-            var response = Helper.Helper.Request(method, url, body, headers);
-            _status = (int)response.StatusCode;
-            return response;
-        }
+        }        
         private string GetNameFileForId(string fileID)
         {
             var queryParameters = new Scripting.Dictionary();
