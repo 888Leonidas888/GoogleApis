@@ -12,21 +12,39 @@ using GoogleApis.Drive.Common;
 
 namespace GoogleApis.Drive.Component
 {
-    //// Implementar la interfaz IGoogleDrive en la clase GoogleDrive
+    /// <summary>
+    /// Implementa la interfaz IFiles y proporciona métodos para interactuar con los archivos de Google Drive.
+    /// </summary>
     [ComVisible(true)]
     [Guid("f3fbc540-6c6d-4f3f-8f25-83337d0a73d6")] // Un GUID único para la clase
     [ClassInterface(ClassInterfaceType.None)] // Evita que se genere automáticamente una interfaz COM
-    public class Files :GoogleDriveBase, IFiles
+    public class Files : GoogleDriveBase, IFiles
     {
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase Files con la clave de API y el token de acceso especificados.
+        /// </summary>
+        /// <param name="apiKey">La clave de API de Google Drive.</param>
+        /// <param name="accessToken">El token de acceso de Google Drive.</param>
         public Files(string apiKey, string accessToken)
         {
             _apiKey = apiKey;
             _accessToken = accessToken;
         }
+
+        /// <summary>
+        /// Obtiene el estado de la operación.
+        /// </summary>
+        /// <returns>El estado de la operación.</returns>
         public int Operation()
         {
             return _status;
-        }        
+        }
+
+        /// <summary>
+        /// Obtiene el nombre de un archivo a partir de su ID.
+        /// </summary>
+        /// <param name="fileID">El ID del archivo.</param>
+        /// <returns>El nombre del archivo.</returns>
         private string GetNameFileForId(string fileID)
         {
             var queryParameters = new Scripting.Dictionary();
@@ -46,6 +64,14 @@ namespace GoogleApis.Drive.Component
 
             return nameFile;
         }
+
+        /// <summary>
+        /// Copia un archivo en Google Drive.
+        /// </summary>
+        /// <param name="fileID">El ID del archivo a copiar.</param>
+        /// <param name="fileObject">El objeto de archivo a copiar.</param>
+        /// <param name="queryParameters">Los parámetros de consulta opcionales.</param>
+        /// <returns>Los datos de la respuesta de la copia.</returns>
         public string Copy(string fileID, string fileObject, Scripting.Dictionary queryParameters = null)
         {
             try
@@ -67,6 +93,12 @@ namespace GoogleApis.Drive.Component
                 throw new Exception($"Error Copy {fileID} : {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Elimina un archivo de Google Drive.
+        /// </summary>
+        /// <param name="fileID">El ID del archivo a eliminar.</param>
+        /// <returns>Los datos de la respuesta de la eliminación.</returns>
         public string Delete(string fileID)
         {
             try
@@ -85,6 +117,12 @@ namespace GoogleApis.Drive.Component
                 throw new Exception($"Error Delete {fileID} : {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Vacía la papelera de reciclaje de Google Drive.
+        /// </summary>
+        /// <param name="queryParameters">Los parámetros de consulta opcionales.</param>
+        /// <returns>Los datos de la respuesta del vaciado de la papelera de reciclaje.</returns>
         public string EmptyTrash(Scripting.Dictionary queryParameters = null)
         {
             try
@@ -103,6 +141,14 @@ namespace GoogleApis.Drive.Component
                 throw new Exception($"Error EmptyTrash : {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Exporta un archivo de Google Drive.
+        /// </summary>
+        /// <param name="fileID">El ID del archivo a exportar.</param>
+        /// <param name="queryParameters">Los parámetros de consulta.</param>
+        /// <param name="pathFile">La ruta del archivo de destino.</param>
+        /// <returns>True si la exportación fue exitosa, False en caso contrario.</returns>
         public bool Export(string fileID, Scripting.Dictionary queryParameters, string pathFile)
         {
             try
@@ -129,6 +175,12 @@ namespace GoogleApis.Drive.Component
                 throw new Exception($"Error Export {fileID} : {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Genera IDs para nuevos archivos de Google Drive.
+        /// </summary>
+        /// <param name="queryParameters">Los parámetros de consulta opcionales.</param>
+        /// <returns>Los datos de la respuesta de la generación de IDs.</returns>
         public string GenerateIds(Scripting.Dictionary queryParameters = null)
         {
             try
@@ -147,6 +199,13 @@ namespace GoogleApis.Drive.Component
                 throw new Exception($"Error Generate Ids : {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Obtiene los metadatos de un archivo de Google Drive.
+        /// </summary>
+        /// <param name="fileID">El ID del archivo.</param>
+        /// <param name="queryParameters">Los parámetros de consulta opcionales.</param>
+        /// <returns>Los datos de los metadatos del archivo.</returns>
         public string GetMetadata(string fileID, Scripting.Dictionary queryParameters = null)
         {
             try
@@ -165,6 +224,12 @@ namespace GoogleApis.Drive.Component
                 throw new Exception($"Error get metadata of {fileID} : {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Obtiene una lista de archivos de Google Drive.
+        /// </summary>
+        /// <param name="queryParameters">Los parámetros de consulta opcionales.</param>
+        /// <returns>Los datos de la lista de archivos.</returns>
         public string List(Scripting.Dictionary queryParameters = null)
         {
             try
@@ -182,6 +247,13 @@ namespace GoogleApis.Drive.Component
                 throw new Exception($"Error list : {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Obtiene una lista de etiquetas de un archivo de Google Drive.
+        /// </summary>
+        /// <param name="fileID">El ID del archivo.</param>
+        /// <param name="queryParameters">Los parámetros de consulta opcionales.</param>
+        /// <returns>Los datos de la lista de etiquetas del archivo.</returns>
         public string ListLabels(string fileID, Scripting.Dictionary queryParameters = null)
         {
             try
@@ -200,6 +272,14 @@ namespace GoogleApis.Drive.Component
                 throw new Exception($"Error list labels {fileID} : {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Actualiza un archivo de Google Drive.
+        /// </summary>
+        /// <param name="fileID">El ID del archivo a actualizar.</param>
+        /// <param name="fileObject">El objeto de archivo a actualizar.</param>
+        /// <param name="queryParameters">Los parámetros de consulta opcionales.</param>
+        /// <returns>Los datos de la respuesta de la actualización.</returns>
         public string Update(string fileID, string fileObject = null, Scripting.Dictionary queryParameters = null)
         {
             try
@@ -218,6 +298,12 @@ namespace GoogleApis.Drive.Component
                 throw new Exception($"Error update {fileID} : {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Descarga el contenido de un archivo de Google Drive a través de su enlace de contenido web.
+        /// </summary>
+        /// <param name="fileID">El ID del archivo.</param>
+        /// <returns>True si la descarga fue exitosa, False en caso contrario.</returns>
         public bool DownLoadContentLink(string fileID)
         {
             const string WEB_CONTENT_LINK = "webContentLink";
@@ -226,7 +312,6 @@ namespace GoogleApis.Drive.Component
             string json = null;
             try
             {
-                //fields["fields"] = WEB_CONTENT_LINK;
                 fields.Add("fields", WEB_CONTENT_LINK);
                 json = GetMetadata(fileID, fields);
 
@@ -252,6 +337,13 @@ namespace GoogleApis.Drive.Component
                 throw new Exception($"Error download for content link {fileID} : {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Descarga un archivo de Google Drive y lo guarda en el directorio especificado.
+        /// </summary>
+        /// <param name="fileID">El ID del archivo a descargar.</param>
+        /// <param name="directory">El directorio de destino.</param>
+        /// <returns>True si la descarga fue exitosa, False en caso contrario.</returns>
         public bool DownLoad(string fileID, string directory)
         {
             if (!System.IO.Directory.Exists(directory))
@@ -278,6 +370,13 @@ namespace GoogleApis.Drive.Component
             }
             return false;
         }
+
+        /// <summary>
+        /// Sube un archivo a Google Drive utilizando el método de carga de tipo "media".
+        /// </summary>
+        /// <param name="pathFile">La ruta del archivo a subir.</param>
+        /// <param name="mimeType">El tipo MIME del archivo.</param>
+        /// <returns>Los datos de la respuesta de la subida.</returns>
         public string UploadMedia(string pathFile = null, string mimeType = "application/octet-stream")
         {
             bool endPointUpload = false;
@@ -327,14 +426,21 @@ namespace GoogleApis.Drive.Component
 
             return response.Content.ReadAsStringAsync().Result;
         }
+
+        /// <summary>
+        /// Sube un archivo a Google Drive utilizando el método de carga de tipo "multipart".
+        /// </summary>
+        /// <param name="pathFile">La ruta del archivo a subir.</param>
+        /// <param name="fileObject">El objeto de archivo a subir.</param>
+        /// <returns>Los datos de la respuesta de la subida.</returns>
         public string UploadMultipart(string pathFile, string fileObject)
         {
             try
             {
                 string boundary = Helper.Helper.GenerateString(15);
                 var queryParameters = new Scripting.Dictionary {
-                    {"uploadType", "multipart" }
-                };
+                        {"uploadType", "multipart" }
+                    };
 
                 string url = CreateQueryParameters(queryParameters: queryParameters, endPointUpload: true);
 
