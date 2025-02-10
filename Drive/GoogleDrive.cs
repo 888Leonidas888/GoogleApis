@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using GoogleApis.Drive.Interfaces;
 using GoogleApis.Drive.Component;
 using GoogleApis.Drive.Common;
+using GoogleApis.Oauth;
 
 namespace GoogleApis
 {    
@@ -29,12 +30,10 @@ namespace GoogleApis
         /// Establece la conexión con el servicio de Google Drive.
         /// </summary>
         /// <param name="oFlowOauth">El flujo de autenticación OAuth.</param>
-        public void ConnectionService(object oFlowOauth)
-        {
-            dynamic flow = oFlowOauth;
-
-            _apiKey = flow.GetApiKey();
-            _accessToken = flow.GetTokenAccess();
+        public void ConnectionService(FlowOauth oauth)
+        {        
+            _apiKey = oauth.ApiKey;
+            _accessToken = oauth.AccessToken;
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using GoogleApis.Sheet.Components;
 using GoogleApis.Sheet.Common;
 using System;
 using System.Runtime.InteropServices;
+using GoogleApis.Oauth;
 
 namespace GoogleApis.Sheet
 {   
@@ -28,13 +29,11 @@ namespace GoogleApis.Sheet
         /// <summary>
         /// Establece la conexión con el servicio de Google Sheets.
         /// </summary>
-        /// <param name="oFlowOauth">El objeto de flujo de autenticación OAuth.</param>
-        public void ConnectionService(object oFlowOauth)
-        {
-            dynamic flow = oFlowOauth;
-
-            _apiKey = flow.GetApiKey();
-            _accessToken = flow.GetTokenAccess();
+        /// <param name="oauth">El objeto de flujo de autenticación OAuth.</param>
+        public void ConnectionService(FlowOauth oauth)
+        {           
+            _apiKey = oauth.ApiKey;
+            _accessToken = oauth.AccessToken;
         }
 
         /// <summary>

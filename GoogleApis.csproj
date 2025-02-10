@@ -51,6 +51,8 @@
     <Compile Include="Drive\GoogleDrive.cs" />
     <Compile Include="Drive\Interfaces\IFiles.cs" />
     <Compile Include="Drive\Interfaces\IGoogleDrive.cs" />
+    <Compile Include="Oauth\FlowOauth.cs" />
+    <Compile Include="Oauth\Interfaces\IFlowOauth.cs" />
     <Compile Include="Sheet\Component\Sheets.cs" />
     <Compile Include="Sheet\Component\SpreadSheets.cs" />
     <Compile Include="Sheet\Component\Values.cs" />
