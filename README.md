@@ -45,7 +45,7 @@ Los métodos expuestos se basan en la documentación oficial de Google, por lo q
 👇 Descargue, descomprima y ejecute el archivo **setup.exe** para instalar la DLL.
 
 
-[![Descargar Instalador](https://img.shields.io/badge/⬇-Descargar%20ZIP-green?style=for-the-badge)](https://github.com/888Leonidas888/GoogleApis/releases/download/v1.0.0/setup.zip)
+[![Descargar Instalador](https://img.shields.io/badge/⬇-Descargar%20ZIP-green?style=for-the-badge)](https://github.com/888Leonidas888/GoogleApis/releases/download/v1.0.0/setup.7z)
 
 
 ## 2️⃣ Activar referencias
