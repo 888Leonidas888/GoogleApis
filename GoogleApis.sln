@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApis", "GoogleApis.csproj", "{9282A7EE-C694-460C-9BD8-2C1311F80B5E}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "GoogleApisForVBA", "Installer\GoogleApisForVBA\GoogleApisForVBA.vdproj", "{62471B5F-5127-01E9-F05B-EBC387D69C68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{9282A7EE-C694-460C-9BD8-2C1311F80B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9282A7EE-C694-460C-9BD8-2C1311F80B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9282A7EE-C694-460C-9BD8-2C1311F80B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62471B5F-5127-01E9-F05B-EBC387D69C68}.Debug|Any CPU.ActiveCfg = Debug
+		{62471B5F-5127-01E9-F05B-EBC387D69C68}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
