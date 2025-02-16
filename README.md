@@ -9,7 +9,7 @@
 🚀Consuma las APIs de Google Drive y Sheets desde **VBA** con esta DLL escrita en **C#** para **VBA**. 
 
 Eh tratado de abarcar la mayor cantidad de operaciones que le permiten cada API,
-desde listar archivos, cargar archivos, descargar archivos, crear carpetas, eliminar archivos, compartir archivos, etc. Y para google sheets, leer y escribir en hojas de cálculo, 
+desde listar archivos, cargar archivos, descargar archivos, crear carpetas, eliminar archivos, etc. Y para google sheets, leer y escribir en hojas de cálculo, 
 crear hojas de cálculo, eliminar hojas de cálculo, actualizar hojas de cálculo,etc.
 
 📑Esta DLL también provee una clase llamada `FlowOauth` que se encarga de gestionar el flujo de autenticación y autorización de **OAuth 2.0** para acceder a los recursos de Google Drive y Google Sheets, por lo que no tendrás que preocuparte por la autenticación y autorización de tus aplicaciones.
@@ -34,11 +34,12 @@ Los métodos expuestos se basan en la documentación oficial de Google, por lo q
 ## Tabla de contenido
 + 1️⃣ [Instalación](#instalación)
 + 2️⃣ [Activar referencias](#activar-referencias)
-+ 3️⃣ [Configuración de entorno en Google](#configuración-de-entorno-en-google)
++ 3️⃣ [Configuración de entorno en Google](#Configuración-de-entorno-en-google)
 + 4️⃣ [Guardar credenciales de acceso](#guardar-credenciales-de-acceso)
 + 5️⃣ [Probar FlowOauth y generar el token de acceso](#probar-flowoauth-y-generar-el-token-de-acceso)
 + 6️⃣ [Ejemplo de uso](#ejemplo-de-uso)
-+ 7️⃣ [Recursos adicionales](#Recursos-adicionales)
++ 7️⃣ [Video tutorial](#video-tutorial)
++ 8️⃣ [Recursos adicionales](#Recursos-adicionales)
 
 ## 1️⃣ Instalación
 
@@ -67,14 +68,14 @@ la lectura y escritura de archivos **.json**.
 
 
 
-## 3️⃣ Configuración de entorno en Google
+## 3️⃣ Configuración de entorno en google
 
 Posiblemente este sea uno de los pasos mas tediosos a seguir pero tomese su tiempo para leerlo detenidamente, visite la documentación para saber mas [Desarrolla en Google Workspace](https://developers.google.com/workspace/guides/get-started?hl=es_419).
 
 Aquí te dejo un video de como hacerlo, lo hize hace un algún tiempo pero el proceso sigue siendo el mismo, debo mencionar que para agregar mas apis a tu proyecto
 debes seguir el paso del minuto 1:08 que esta en el video, por ahora solo podemos agregar la **API de Google Drive** y **Google Sheets**.
 
-📺 [Ver en Youtube](https://youtu.be/8GG7LnaMtuE?si=JXTi411BBu7Hsbn1)
+📺 [Ver en Youtube](https://youtu.be/iW2cC6AZ7i8)
 
 [![Mira el video](./Assets/Captura_de_pantalla_2025-02-15_104855.png)](https://youtu.be/8GG7LnaMtuE?si=JXTi411BBu7Hsbn1)
 
@@ -378,8 +379,13 @@ Sub send_data_sheet()
 End Sub
 
 ```
+## 7️⃣ Video tutorial ![YouTube](https://img.shields.io/badge/YouTube-Subscribe-F00?style=flat&logo=youtube&logoColor=white)
 
-## 7️⃣ Recursos adicionales
++ 📺 [Crear credencial es la plataforma de Google](https://youtu.be/iW2cC6AZ7i8)
++ 📺 [Instalación de DLL + demo](https://youtu.be/GTSw4W14IAU)
+
+
+## 8️⃣ Recursos adicionales
 Los siguientes enlaces estan relacionados a las consultas para listar.
 
 - [Method: files.list](https://developers.google.com/drive/api/v3/reference/files/list)
